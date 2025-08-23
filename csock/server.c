@@ -7,6 +7,7 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <stdbool.h>
 
 void error(char *msg)
 {
@@ -55,6 +56,10 @@ int main(int argc, char *argv[])
 	 
 	 // SE BLOQUEA A ESPERAR UNA CONEXIÓN
      clilen = sizeof(cli_addr);
+     //while (true){
+
+     //}
+
      newsockfd = accept(sockfd, 
                  (struct sockaddr *) &cli_addr, 
                  &clilen);

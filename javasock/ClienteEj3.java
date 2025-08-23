@@ -9,7 +9,7 @@
 import java.io.*;
 import java.net.*;
 
-public class Client2
+public class ClienteEj3
 {
   public static void main(String[] args) throws IOException
   {
@@ -44,27 +44,39 @@ public class Client2
     /* Buffer to use with communications (and its length) */
     byte[] buffer;
     
-    /* Get some input from user */
+    /* Get some input from user 
     BufferedReader console  = new BufferedReader(new InputStreamReader(System.in));
     System.out.print("Please enter the message: ");
     String inputline = console.readLine();
+    */
 
-    /* Get the bytes... */
-    buffer = inputline.getBytes();
-
-    /* Send read data to server */
-    toserver.write(buffer, 0, buffer.length);
     
-    /* Recv data back from server (get space) */
-    buffer = new byte[256];
-    fromserver.read(buffer);
+    for (int i = 1; i <= 6; i++) {
+      int size = (int) Math.pow(10, i);
 
-    /* Show data received from server */
-    String resp = new String(buffer);
-    System.out.println(resp);
-    
+      String inputline = "a".repeat(size);
+      /* Get the bytes... */
+      buffer = inputline.getBytes();
+
+      /* Send read data to server */
+      toserver.writeInt(inputline.length());
+      toserver.write(buffer, 0, buffer.length);
+      System.out.print("mensaje enviado");
+
+      /* Recv data back from server (get space) */
+      buffer = new byte[256];
+      fromserver.read(buffer);
+
+      /* Show data received from server */
+      String resp = new String(buffer);
+      System.out.println(resp);
+
+    }
+
     fromserver.close();
     toserver.close();
     socketwithserver.close();
+    
   }
+  
 }
