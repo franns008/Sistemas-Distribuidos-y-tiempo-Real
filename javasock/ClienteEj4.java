@@ -11,7 +11,7 @@ import java.net.*;
 import java.time.Duration;
 import java.time.Instant;
 
-public class ClienteEj3
+public class ClienteEj4
 {
   public static void main(String[] args) throws IOException
   {
@@ -64,14 +64,16 @@ public class ClienteEj3
       Instant t1 = Instant.now();
       toserver.writeInt(inputline.length());
       toserver.write(buffer, 0, buffer.length);
-      Instant t2 = Instant.now();
-      System.out.print("mensaje enviado, le tomo " + Duration.between(t1, t2).toMillis() + " ms");
+      
+      System.out.println("mensaje enviado");
 
       /* Recv data back from server (get space) */
       buffer = new byte[256];
       fromserver.read(buffer);
-
+      Instant t2 = Instant.now();
       /* Show data received from server */
+      
+      System.out.println("Tiempo de comunicacion " + Duration.between(t1, t2).toMillis() + " ms");
       String resp = new String(buffer);
       System.out.println(resp);
 

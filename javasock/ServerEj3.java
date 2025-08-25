@@ -77,6 +77,7 @@ public class ServerEj3
         
         while (read < length) {
             try {
+                // ¿Sobre escribo? consultar
                 read += fromclient.read(buffer, read, length - read);
             } catch (SocketException e) {
                 System.out.println("Cliente cerró la conexión.");
