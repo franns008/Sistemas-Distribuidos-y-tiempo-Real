@@ -8,8 +8,6 @@
 
 import java.io.*;
 import java.net.*;
-import java.time.Duration;
-import java.time.Instant;
 
 public class ClienteEj3
 {
@@ -56,16 +54,16 @@ public class ClienteEj3
     for (int i = 1; i <= 6; i++) {
       int size = (int) Math.pow(10, i);
 
-      String inputline = "a".repeat(size);
+      String inputline = "a".repeat(size-1)+"b";
       /* Get the bytes... */
       buffer = inputline.getBytes();
 
       /* Send read data to server */
-      Instant t1 = Instant.now();
+   
       toserver.writeInt(inputline.length());
       toserver.write(buffer, 0, buffer.length);
-      Instant t2 = Instant.now();
-      System.out.print("mensaje enviado, le tomo " + Duration.between(t1, t2).toMillis() + " ms");
+  
+      System.out.println("Mensaje enviado");
 
       /* Recv data back from server (get space) */
       buffer = new byte[256];

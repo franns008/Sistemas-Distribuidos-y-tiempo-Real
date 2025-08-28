@@ -87,7 +87,12 @@ public class ServerEj3
         /* Convert to string */
         String str = new String(buffer, 0, read);
 
-        System.out.println("Here is the message length: \n" +  str.length());
+        System.out.println("Here is the message length: \n"+ str.length());
+        if (buffer[buffer.length - 1] == 'b' && str.length() == length) {
+            System.out.println("El mensaje llego correctamente");
+        }else{
+          System.out.println("El mensaje NO llego correctamente");
+        }
 
         /* Fixed string to the client */
         String strresp = "I got your message, whith size: " + str.length();

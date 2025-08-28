@@ -8,8 +8,6 @@
 
 import java.io.*;
 import java.net.*;
-import java.time.Duration;
-import java.time.Instant;
 
 public class ClienteEj4
 {
@@ -61,19 +59,24 @@ public class ClienteEj4
       buffer = inputline.getBytes();
 
       /* Send read data to server */
-      Instant t1 = Instant.now();
+      long t1 = System.nanoTime();
       toserver.writeInt(inputline.length());
       toserver.write(buffer, 0, buffer.length);
-      
+
+      long t2 = System.nanoTime();
+
       System.out.println("mensaje enviado");
 
       /* Recv data back from server (get space) */
       buffer = new byte[256];
+      long t3 = System.nanoTime();
       fromserver.read(buffer);
-      Instant t2 = Instant.now();
+      long t4 = System.nanoTime();
       /* Show data received from server */
-      
-      System.out.println("Tiempo de comunicacion " + Duration.between(t1, t2).toMillis() + " ms");
+
+      System.out.println("Tiempo de envio " + (t2 - t1) / 1000 + " microsegundos");
+      System.out.println("Tiempo de recepcion " + (t4 - t3) / 1000 + " microsegundos");
+
       String resp = new String(buffer);
       System.out.println(resp);
 
