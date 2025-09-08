@@ -54,7 +54,7 @@ public class ClienteEj4
     for (int i = 1; i <= 6; i++) {
       int size = (int) Math.pow(10, i);
 
-      String inputline = "a".repeat(size);
+      String inputline = "a".repeat(size-1)+"b";
       /* Get the bytes... */
       buffer = inputline.getBytes();
 
