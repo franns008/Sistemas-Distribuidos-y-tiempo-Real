@@ -62,10 +62,9 @@ public class ClienteEj4
       long t1 = System.nanoTime();
       toserver.writeInt(inputline.length());
       toserver.write(buffer, 0, buffer.length);
-
       long t2 = System.nanoTime();
 
-      System.out.println("mensaje enviado");
+      System.out.println("Mensaje enviado");
 
       /* Recv data back from server (get space) */
       buffer = new byte[256];
@@ -74,8 +73,8 @@ public class ClienteEj4
       long t4 = System.nanoTime();
       /* Show data received from server */
 
-      System.out.println("Tiempo de envio " + (t2 - t1) / 1000 + " microsegundos");
-      System.out.println("Tiempo de recepcion " + (t4 - t3) / 1000 + " microsegundos");
+      System.out.println("Tiempo de envio " +(t2 - t1)/1000000 +"ms");
+      System.out.println("Tiempo de recepcion " + (t4 - t3)/1000000 +"ms");
 
       String resp = new String(buffer);
       System.out.println(resp);
