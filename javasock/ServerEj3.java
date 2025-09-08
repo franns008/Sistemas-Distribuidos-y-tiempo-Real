@@ -87,17 +87,19 @@ public class ServerEj3
         /* Convert to string */
         String str = new String(buffer, 0, read);
 
+
+
         System.out.println("Here is the message length: \n"+ str.length());
+        String strresp;
         if (buffer[buffer.length - 1] == 'b' && str.length() == length) {
-            System.out.println("El mensaje llego correctamente");
+          System.out.println("El mensaje llego correctamente");
+          strresp ="El mensaje llego correctamente con longitud de:" + str.length();
         }else{
           System.out.println("El mensaje NO llego correctamente");
+          strresp ="El mensaje NO llego correctamente";
         }
 
         /* Fixed string to the client */
-        String strresp = "I got your message, whith size: " + str.length();
-
-        System.out.println("strrsp " + strresp);
 
         buffer = strresp.getBytes();
 
