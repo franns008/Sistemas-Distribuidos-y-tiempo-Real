@@ -1,0 +1,50 @@
+# ------------------------
+# VAGRANT
+# ------------------------
+.vagrant/          # Carpeta local de Vagrant con info de las VMs
+*.box              # Archivos de imágenes de Vagrant (pesados)
+
+# ------------------------
+# VIRTUALBOX
+# ------------------------
+*.log
+*.vdi              # Discos virtuales
+*.vmdk
+*.vhd
+*.vagrantfile.swp  # Archivos swap temporales de Vagrantfile
+
+# ------------------------
+# SISTEMA (Linux/Mac/Win)
+# ------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.nfs*
+
+# ------------------------
+# EDITORES
+# ------------------------
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains / IntelliJ
+.idea/
+
+# ------------------------
+# VARIOS
+# ------------------------
+*.tmp
+*.swp
+*.bak
+*.old
