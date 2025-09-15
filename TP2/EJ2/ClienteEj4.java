@@ -20,19 +20,28 @@ public class ClienteEj4
       System.exit(1);
     }
 
-    /* The socket to connect to the echo server */
+     /* The socket to connect to the echo server */
     Socket socketwithserver = null;
 
-    try /* Connection with the server */
-    { 
-      socketwithserver = new Socket(args[0], Integer.valueOf(args[1]));
+    SocketAddress remote = new InetSocketAddress(args[0], Integer.parseInt(args[1]));
+    // Reintentar conexión hasta que el servidor esté disponible (sin timeout explícito)
+    while (true) {
+      try {
+        socketwithserver = new Socket();
+        socketwithserver.connect(remote);
+        break; // conectado
+      } catch (IOException e) {
+        try {
+          Thread.sleep(500); // evitar busy-wait
+        } catch (InterruptedException ie) {
+          Thread.currentThread().interrupt();
+          System.out.println("Interrumpido mientras esperaba al servidor");
+          return;
+        }
+      }
     }
-    catch (Exception e)
-    {
-      System.out.println("ERROR connecting");
-      System.exit(1);
-    } 
 
+    /* Wait until connection is established */
     /* Streams from/to server */
     DataInputStream  fromserver;
     DataOutputStream toserver;

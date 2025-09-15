@@ -12,7 +12,7 @@ public class Client
       System.exit(1);
     }
 
-     /* The socket to connect to the echo server */
+    /* The socket to connect to the echo server */
     Socket socketwithserver = null;
 
     SocketAddress remote = new InetSocketAddress(args[0], Integer.parseInt(args[1]));
@@ -53,7 +53,6 @@ public class Client
       /* Get the bytes... */
       buffer = inputline.getBytes();
 
-     
       /* Send read data to server */
       long t1 = System.nanoTime();
       toserver.writeInt(inputline.length());
@@ -91,24 +90,21 @@ public class Client
       /* Convert to string */
       String str = new String(buffer, 0, leidosDeVuelta);
 
-      String strresp;
       if (buffer[buffer.length - 1] == 'b' && str.length() == size) {
         System.out.println("El mensaje llego correctamente");
-        strresp ="El mensaje llego correctamente con longitud de:" + str.length();
       }else{
         System.out.println("El mensaje NO llego correctamente");
-        strresp ="El mensaje NO llego correctamente";
       }
       
       long total = (t4 - t1) / 1000000;   // tiempo de recepción en nanosegundos
 
       long tiempoPromedio = (total) / 2;
       System.out.println("El tiempo elapsed fue de "+ tiempoPromedio + "ms");
-      String resp = new String(buffer);
+  // No usamos el contenido completo de buffer aquí
       
 
     }
-
+    System.out.println("El test del ejercicio 3 ha finalizado correctamente");
     fromserver.close();
     toserver.close();
     socketwithserver.close();

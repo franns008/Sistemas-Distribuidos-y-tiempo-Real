@@ -1,0 +1,38 @@
+Vagrant.configure("2") do |config|
+  2.times do |num|
+      # Montar la carpeta del host ./codigos dentro de la VM como /codigos
+      config.vm.synced_folder "./codigos", "/codigos"
+      config.vm.define ("vm%01d"  % (num + 1)) do |machine|
+      machine.vm.box = "hashicorp/bionic64"
+      machine.vm.network "public_network"
+      machine.vm.hostname = "vm#{num+1}"
+
+      machine.vm.provider "virtualbox" do |vb|
+        vb.memory = "512"
+        vb.name = "virtualM#{num+1}"
+      end
+
+      machine.vm.provision "shell", inline: <<-SHELL
+        # Esto se ejecuta solo la primera vez
+        apt-get update
+        apt-get install -y net-tools debconf-utils joe zip libc-dev-bin build-essential default-jdk
+        
+        # Asegurar permisos de ejecución de los scripts (por si se llaman manualmente)
+        chmod +x /codigos/*.sh || true
+      SHELL
+      # Provisión condicional basada en el nombre de la VM
+      machine.vm.provision "shell", inline: <<-SHELL, run: "always"
+        # Esto se ejecuta siempre que hagas vagrant up
+        if [ "$(hostname)" = "vm1" ]; then #Servidor
+          javac /codigos/*.java
+          # Lanzar servidor en background para no bloquear la provisión
+          nohup bash /codigos/servidor.sh > /codigos/servidor.log 2>&1 &
+        elif [ "$(hostname)" = "vm2" ]; then  #Cliente
+          javac /codigos/*.java
+          bash /codigos/cliente.sh
+        fi
+      SHELL
+    end 
+  end
+end
+  

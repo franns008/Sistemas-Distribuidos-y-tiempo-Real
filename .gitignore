@@ -1,8 +1,11 @@
 # ------------------------
 # VAGRANT
 # ------------------------
-.vagrant/          # Carpeta local de Vagrant con info de las VMs
-*.box              # Archivos de imágenes de Vagrant (pesados)
+.vagrant/                 # Carpeta local de Vagrant (nivel actual)
+**/.vagrant/**            # Cualquier .vagrant en subcarpetas
+.vagrant.d/               # Config local de Vagrant (si se llegara a versionar)
+Vagrantfile.local         # Overrides locales de Vagrant
+*.box                     # Archivos de imágenes de Vagrant (pesados)
 
 # ------------------------
 # VIRTUALBOX
@@ -42,9 +45,25 @@ $RECYCLE.BIN/
 .idea/
 
 # ------------------------
+# JAVA (build artifacts)
+# ------------------------
+*.class
+out/
+target/
+
+# ------------------------
 # VARIOS
 # ------------------------
 *.tmp
 *.swp
 *.bak
 *.old
+
+# ------------------------
+# TP2 artefactos generados
+# ------------------------
+TP2/**/codigos/servidor.log
+TP2/**/codigos/resultadoCliente.txt
+TP2/**/codigos/resultadoServidor.txt
+TP2/**/codigos/server_ip
+TP2/**/codigos/server_port
