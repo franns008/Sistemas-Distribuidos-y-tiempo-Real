@@ -1,8 +1,11 @@
 # ------------------------
 # VAGRANT
 # ------------------------
+# ------------------------
+# VAGRANT
+# ------------------------
 .vagrant/                 # Carpeta local de Vagrant (nivel actual)
-**/.vagrant/**            # Cualquier .vagrant en subcarpetas
+**/.vagrant/              # Cualquier .vagrant en subcarpetas
 .vagrant.d/               # Config local de Vagrant (si se llegara a versionar)
 Vagrantfile.local         # Overrides locales de Vagrant
 *.box                     # Archivos de imágenes de Vagrant (pesados)
@@ -47,7 +50,6 @@ $RECYCLE.BIN/
 # ------------------------
 # JAVA (build artifacts)
 # ------------------------
-*.class
 out/
 target/
 
