@@ -1,0 +1,71 @@
+# ------------------------
+# VAGRANT
+# ------------------------
+# ------------------------
+# VAGRANT
+# ------------------------
+/.vagrant/                 # Carpeta local de Vagrant (nivel actual)
+**/.vagrant/              # Cualquier .vagrant en subcarpetas
+.vagrant.d/               # Config local de Vagrant (si se llegara a versionar)
+Vagrantfile.local         # Overrides locales de Vagrant
+*.box                     # Archivos de imágenes de Vagrant (pesados)
+
+# ------------------------
+# VIRTUALBOX
+# ------------------------
+*.log
+*.vdi              # Discos virtuales
+*.vmdk
+*.vhd
+*.vagrantfile.swp  # Archivos swap temporales de Vagrantfile
+
+# ------------------------
+# SISTEMA (Linux/Mac/Win)
+# ------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.nfs*
+
+# ------------------------
+# EDITORES
+# ------------------------
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains / IntelliJ
+.idea/
+
+# ------------------------
+# JAVA (build artifacts)
+# ------------------------
+out/
+target/
+
+# ------------------------
+# VARIOS
+# ------------------------
+*.tmp
+*.swp
+*.bak
+*.old
+
+# ------------------------
+# TP2 artefactos generados
+# ------------------------
+TP2/**/codigos/servidor.log
+TP2/**/codigos/resultadoCliente.txt
+TP2/**/codigos/resultadoServidor.txt
+TP2/**/codigos/server_ip
+TP2/**/codigos/server_port
