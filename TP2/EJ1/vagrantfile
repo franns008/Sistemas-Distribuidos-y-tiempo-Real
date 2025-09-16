@@ -3,11 +3,11 @@ Vagrant.configure("2") do |config|
     config.vm.define ("vm%01d"  % (num + 1)) do |machine|
       machine.vm.box = "ubuntu/jammy64" #Ubuntu 22.04 LTS (Jammy Jellyfish
       machine.vm.network "public_network" 
-      machine.vm.hostname = "vm#{num+1}"
+      machine.vm.hostname = "MaquinaVirtualNueva#{num+1}"
 
       machine.vm.provider "virtualbox" do |vb|
         vb.memory = "512"
-        vb.name = "vm#{num+1}"
+        vb.name = "MaquinaVirtualNueva#{num+1}"
       end
 
       machine.vm.provision "shell", inline: <<-SHELL
