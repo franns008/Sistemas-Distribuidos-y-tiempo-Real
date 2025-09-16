@@ -9,7 +9,7 @@
 import java.io.*;
 import java.net.*;
 
-public class ClienteEj4
+public class Cliente
 {
   public static void main(String[] args) throws IOException
   {
