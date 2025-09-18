@@ -7,11 +7,7 @@ cd /codigos || cd "$(dirname "$0")"
 echo -e "\e[1;31m=============================="
 echo -e "   ¡EL SCRIPT DEL CLIENTE SE EJECUTÓ!"
 echo -e "==============================\e[0m"
-
-ls -l
-
 echo -e "\e[2;31m🎉 FELICIDADES SOS UN CLIENTE🎉\e[0m"
-echo -e "\e[2;31m ahora podes mandar cosas \e[0m"
 
 # Obtener IP/puerto desde args o archivos compartidos
 SERVER_IP=${1:-${SERVER_IP:-}}

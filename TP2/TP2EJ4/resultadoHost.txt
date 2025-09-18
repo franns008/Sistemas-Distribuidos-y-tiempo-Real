@@ -1,0 +1,14 @@
+﻿Ejecutando Client contra 192.168.0.23:5000
+El mensaje llego correctamente
+El tiempo elapsed fue de 9ms
+El mensaje llego correctamente
+El tiempo elapsed fue de 22ms
+El mensaje llego correctamente
+El tiempo elapsed fue de 21ms
+El mensaje llego correctamente
+El tiempo elapsed fue de 1ms
+El mensaje llego correctamente
+El tiempo elapsed fue de 3ms
+El mensaje llego correctamente
+El tiempo elapsed fue de 28ms
+El test del ejercicio 3 ha finalizado correctamente
