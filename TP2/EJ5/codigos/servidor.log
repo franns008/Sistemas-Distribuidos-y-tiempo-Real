@@ -1,0 +1,23 @@
+[1;31m==============================
+   ¡EL SCRIPT DEL SERVIDOR SE EJECUTÓ!
+==============================[0m
+total 38
+-rwxrwxrwx 1 vagrant vagrant 3419 Sep 20 00:59 Client.class
+-rwxrwxrwx 1 vagrant vagrant 2163 Sep 20 00:55 clientePowershell.ps1
+-rwxrwxrwx 1 vagrant vagrant 1708 Sep 19 22:22 cliente.sh
+-rwxrwxrwx 1 vagrant vagrant 3528 Sep 19 21:23 Client.java
+-rwxrwxrwx 1 vagrant vagrant    0 Sep 19 22:19 resultadoCliente.txt
+-rwxrwxrwx 1 vagrant vagrant   88 Sep 20 00:59 resultadoHost.txt
+-rwxrwxrwx 1 vagrant vagrant 1622 Sep 20 00:57 resultadoServidor.txt
+-rwxrwxrwx 1 vagrant vagrant 3234 Sep 20  2025 Server.class
+-rwxrwxrwx 1 vagrant vagrant   13 Sep 20 00:57 server_ip
+-rwxrwxrwx 1 vagrant vagrant 3753 Sep 19 22:18 Server.java
+-rwxrwxrwx 1 vagrant vagrant    5 Sep 20 00:57 server_port
+-rw-rw-rw- 1 vagrant vagrant  116 Sep 20  2025 servidor.log
+-rwxrwxrwx 1 vagrant vagrant 2055 Sep 20 00:56 servidor.sh
+[1;32m🎉 FELICIDADES SOS UN SERVIDOR 🎉[0m
+[IP] Usando IP del servidor: 192.168.1.35
+Server escuchando en 192.168.1.35:5000 (guardado en /codigos/server_ip y /codigos/server_port)
+
+
+======= Se ejecuta el test para el ejercicio 5 =======

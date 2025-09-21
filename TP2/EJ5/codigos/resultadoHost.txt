@@ -1,0 +1,15 @@
+﻿Ejecutando Client contra 192.168.1.35 : 5000
+Me duermo 10 segundos, soy el cliente
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 4ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 21ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 22ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 0ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 4ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 16ms
+El test del ejercicio 5 ha finalizado correctamente
