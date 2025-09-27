@@ -33,8 +33,10 @@ if (-not (Test-Path (Join-Path $CodigosDir 'Client.class')) -and (Test-Path (Joi
     popd | Out-Null
 }
 
-"Ejecutando Client contra ${ServerIp}:${ServerPort}" | Out-File -FilePath $OutputFile -Encoding UTF8
+"Ejecutando Client contra ${ServerIp}:${ServerPort}" | Out-File -FilePath $OutputFile -Append -Encoding UTF8
 # Ejecutar el cliente y garantizar que la salida se agrega en UTF-8 (evitando mezcla UTF-16)
 java -cp $CodigosDir Client $ServerIp $ServerPort 2>&1 | Out-File -FilePath $OutputFile -Append -Encoding UTF8
 
 Write-Host "Listo. Resultado en $OutputFile"
+
+"-------------------------------------" | Out-File -FilePath $OutputFile -Append -Encoding UTF8
