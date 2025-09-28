@@ -7,7 +7,7 @@ public class Client
   {
     if ((args.length != 3) || (Integer.valueOf(args[1]) <= 0) )
     {
-      System.out.println("2 arguments needed: serverhostname port");
+      System.out.println("3 arguments needed: serverhostname port delay_on");
       System.exit(1);
     }
 
