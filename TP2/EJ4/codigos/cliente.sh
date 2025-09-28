@@ -33,8 +33,8 @@ echo "Conectando a ${SERVER_IP}:${SERVER_PORT}"
 # Ejecutar el cliente con classpath actual; cuidado con el nombre/clase exacta
 if [ -f Client.class ]; then
 	echo -e "\n"
-	echo -e "======= Se ejecuta el test para el ejercio 3 ======= "
-	echo -e "======= Se ejecuta el test para el ejercio 3 ======= " >> resultadoCliente.txt
+	echo -e "======= Se ejecuta el test para el ejercio 4 ======= "
+	echo -e "======= Se ejecuta el test para el ejercio 4 ======= " >> resultadoCliente.txt
 	echo -e "\n" >> resultadoCliente.txt
 	java -cp . Client "$SERVER_IP" "$SERVER_PORT" >> resultadoCliente.txt
 else

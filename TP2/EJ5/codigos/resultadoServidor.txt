@@ -67,3 +67,14 @@ El mensaje llegó correctamente
 El mensaje llegó correctamente
 El mensaje llegó correctamente
 Cliente cerró la conexión.
+======= Se ejecuta el test para el ejercicio 5 =======
+
+
+Args recibidos: 5000 0
+El mensaje llegó correctamente
+El mensaje llegó correctamente
+El mensaje llegó correctamente
+El mensaje llegó correctamente
+El mensaje llegó correctamente
+El mensaje llegó correctamente
+Cliente cerró la conexión.

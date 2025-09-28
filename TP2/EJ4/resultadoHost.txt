@@ -4,6 +4,7 @@ El mensaje llego correctamente
 El tiempo elapsed fue de 8ms
 El mensaje llego correctamente
 El tiempo elapsed fue de 22ms
+
 El mensaje llego correctamente
 El tiempo elapsed fue de 22ms
 El mensaje llego correctamente
@@ -13,13 +14,17 @@ El tiempo elapsed fue de 3ms
 El mensaje llego correctamente
 El tiempo elapsed fue de 24ms
 El test del ejercicio 3 ha finalizado correctamente
+
+
 Ejecutando Client contra 192.168.0.33:5000
 El mensaje llego correctamente
 El tiempo elapsed fue de 8ms
 El mensaje llego correctamente
 El tiempo elapsed fue de 23ms
+
 El mensaje llego correctamente
 El tiempo elapsed fue de 21ms
+
 El mensaje llego correctamente
 El tiempo elapsed fue de 0ms
 El mensaje llego correctamente

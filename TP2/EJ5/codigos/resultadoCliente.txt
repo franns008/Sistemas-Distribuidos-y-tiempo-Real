@@ -1,0 +1,16 @@
+======= Se ejecuta el test para el ejercicio 5 ======= 
+
+
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 6ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 22ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 21ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 1ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 5ms
+El mensaje llego correctamente
+El tiempo elapsed (ej5) fue de 15ms
+El test del ejercicio 5 ha finalizado correctamente

@@ -59,7 +59,7 @@ if (-not (Test-Path $ClientClass) -and (Test-Path $ClientJava)) {
 
 # Ejecutar el cliente y guardar la salida
 Write-Host "Ejecutando Client..."
-"Ejecutando Client contra $ServerIp : $ServerPort" | Out-File -FilePath $OutputFile -Encoding UTF8
+"Ejecutando Client contra $ServerIp : $ServerPort" | Out-File -FilePath $OutputFile -Append -Encoding UTF8
 
 java -cp $CodigosDir Client $ServerIp $ServerPort "1" 2>&1 | Out-File -FilePath $OutputFile -Append -Encoding UTF8
 

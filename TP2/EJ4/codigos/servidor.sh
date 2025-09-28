@@ -120,7 +120,7 @@ if [ -f Server.class ]; then
 	echo -e "\n"
 	echo -e "======= Se ejecuta el test ======="
   echo -e "El servidor se está ejecutando. Salida en resultadoServidor.txt"
-	echo -e "======= Se ejecuta el test para el ejercio 3 =======" >> resultadoServidor.txt
+	echo -e "======= Se ejecuta el test para el ejercio 4 =======" >> resultadoServidor.txt
 	echo -e "\n" >> resultadoServidor.txt
 	java -cp . Server "$SERVER_PORT" >> resultadoServidor.txt 
 else
