@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package chatgrupal;
+option java_package = "pdytr.chatgrupal";
+option java_outer_classname = "ChatGrupalProto";
+
+message Mensaje {
+  string usuario = 1;
+  string texto = 2;
+}
+
+message ConectarRequest {
+  string usuario = 1;
+}
+message ConectarResponse {
+  string mensaje = 1;
+}
+
+message EnviarMensajeRequest {
+  Mensaje mensaje = 1;
+}
+message EnviarMensajeResponse {
+  string mensaje = 1;
+}
+
+message RecibirMensajesRequest {
+  string usuario = 1;
+}
+message RecibirMensajesResponse {
+  repeated Mensaje mensajes = 1;
+}
+
+message DesconectarRequest {
+  string usuario = 1;
+}
+message DesconectarResponse {
+  string mensaje = 1;
+}
+
+message HistorialMensajesResponse {
+  repeated Mensaje mensajes = 1;
+}
+
+message Empty {}
+
+service ChatGrupal {
+  rpc Conectar(ConectarRequest) returns (ConectarResponse);
+  rpc EnviarMensaje(EnviarMensajeRequest) returns (EnviarMensajeResponse);
+  rpc RecibirMensajes(RecibirMensajesRequest) returns (stream RecibirMensajesResponse);
+  rpc Desconectar(DesconectarRequest) returns (DesconectarResponse);
+  rpc HistorialMensajes(Empty) returns (HistorialMensajesResponse);
+}

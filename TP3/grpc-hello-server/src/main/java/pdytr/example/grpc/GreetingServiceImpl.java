@@ -9,17 +9,17 @@ public class GreetingServiceImpl extends GreetingServiceGrpc.GreetingServiceImpl
     // HelloRequest has toString auto-generated.
     System.out.println(request);
 
-      try {
-          Thread.sleep(6000);
-      } catch (InterruptedException ex) {
-          
-      }
-
+    
     GreetingServiceOuterClass.HelloResponse response = GreetingServiceOuterClass.HelloResponse.newBuilder()
       .setGreeting("Hello there, " + request.getName())
       .build();
 
-    
+    try {
+        Thread.sleep(6000);
+    } catch (InterruptedException ex) {
+        
+    }
+
     // Use responseObserver to send a single response back
     responseObserver.onNext(response);
 
