@@ -9,22 +9,24 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
     // Lista estática para guardar mensajes en memoria
     public static List<String> mensajes = new CopyOnWriteArrayList<>();
+    public static List<String> usuarios = new CopyOnWriteArrayList<>();
 
     @Override
     public void conectar(ChatGrupalProto.ConectarRequest request,
                          StreamObserver<ChatGrupalProto.ConectarResponse> responseObserver) {
 
         String usuario = request.getUsuario();
+        usuarios.add(usuario);
         String mensaje = "Usuario " + usuario + " conectado al chat grupal.";
 
         ChatGrupalProto.ConectarResponse response = ChatGrupalProto.ConectarResponse.newBuilder()
-                .setMensaje(mensaje)
+                .addMensajesGuardados(mensajes.toString());
                 .build();
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
 
-        System.out.println("[SERVER] " + mens aje);
+        System.out.println("[SERVER] " + mensaje);
     }
 
     @Override

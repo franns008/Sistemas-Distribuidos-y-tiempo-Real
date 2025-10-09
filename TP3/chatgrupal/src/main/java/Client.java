@@ -5,13 +5,14 @@ import io.grpc.ManagedChannelBuilder;
 
 public class Client {
 
+    int id;
     public static void main(String[] args) {
         // 1️⃣ Crear canal
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8080)
                 .usePlaintext()
                 .build();
 
-        ChatGrupalGrpc.ChatGrupalBlockingStub stub = ChatGrupalGrpc.newBlockingStub(channel);
+        ChatGrupalGrpc.ChatGrupalAsyncStub stub = ChatGrupalGrpc.newAsyncStub(channel);
 
 
         ChatGrupalProto.ConectarRequest request = ChatGrupalProto.ConectarRequest.newBuilder()
