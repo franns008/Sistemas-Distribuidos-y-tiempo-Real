@@ -12,40 +12,36 @@ message Mensaje {
 message ConectarRequest {
   string usuario = 1;
 }
+
 message ConectarResponse {
   repeated string mensajesGuardados = 1;
-  int id = 2;
+  int32 id = 2;
 }
 
 message EnviarMensajeRequest {
   Mensaje mensaje = 1;
+  int32 id = 2;
 }
 
-message EnviarMensajeResponse {
+message RecibirMensajeResponse {
   string mensaje = 1;
-}
-
-message RecibirMensajesResponse {
-  repeated Mensaje mensajes = 1;
 }
 
 message DesconectarRequest {
   string usuario = 1;
+  int32 id = 2;
 }
+
 message DesconectarResponse {
   string mensaje = 1;
 }
 
-message HistorialMensajesResponse {
-  repeated Mensaje mensajes = 1;
-}
+
 
 message Empty {}
 
 service ChatGrupal {
+  rpc Chat(stream EnviarMensajeRequest) returns (stream RecibirMensajeResponse);
   rpc Conectar(ConectarRequest) returns (ConectarResponse);
-  rpc EnviarMensaje(EnviarMensajeRequest) returns (EnviarMensajeRequest);
-  rpc RecibirMensajes(RecibirMensajesRequest) returns (stream RecibirMensajesResponse);
   rpc Desconectar(DesconectarRequest) returns (DesconectarResponse);
-  rpc HistorialMensajes(Empty) returns (HistorialMensajesResponse);
 }
