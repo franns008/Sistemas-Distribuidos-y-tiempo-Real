@@ -19,16 +19,23 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
     @Override
     public StreamObserver<ChatGrupalProto.EnviarMensajeRequest> chat(
             StreamObserver<ChatGrupalProto.RecibirMensajeResponse> responseObserver) {
-        // 📨 Este responseObserver lo usa el SERVIDOR para ENVIAR mensajes al cliente
-        // 💬 El StreamObserver<EnviarMensajeRequest> que retorna el método lo usa el SERVIDOR para RECIBIR mensajes del cliente
+        
+        // Este responseObserver lo usa el SERVIDOR para ENVIAR mensajes al cliente
+        //El StreamObserver<EnviarMensajeRequest> que retorna el método lo usa el SERVIDOR para RECIBIR mensajes del cliente
         
         // Inicializo con un valor inválido
         return new StreamObserver<ChatGrupalProto.EnviarMensajeRequest>() {
             private int idAsocado = -1;
             @Override
             public void onNext(ChatGrupalProto.EnviarMensajeRequest request) {
-                String mensaje = request.getMensaje().getUsuario() + " [" + LocalDateTime.now() + "]: "
-                        + request.getMensaje().getTexto();
+                ChatGrupalProto.Mensaje mensajeProto = ChatGrupalProto.Mensaje.newBuilder()
+                        .setUsuario(request.getMensaje().getUsuario())
+                        .setTexto(request.getMensaje().getTexto())
+                        .setTimestamp(LocalDateTime.now().toString())
+                        .build();
+
+                String mensaje = mensajeProto.getUsuario() + " [" + mensajeProto.getTimestamp() + "]: "
+                        + mensajeProto.getTexto();
                 
                 // Aca agrego el observer del cliente que me envio el mensaje a la lista de observers y el id
                 if (idAsocado == -1) {
@@ -39,7 +46,7 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
                 for (StreamObserver<ChatGrupalProto.RecibirMensajeResponse> observer : observers.values()) {
                     ChatGrupalProto.RecibirMensajeResponse response = ChatGrupalProto.RecibirMensajeResponse.newBuilder()
-                            .setMensaje(mensaje)
+                            .setMensaje(mensajeProto)
                             .build();
                     observer.onNext(response);
                 }
@@ -102,5 +109,15 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
         System.out.println("[SERVER] " + mensaje);
     }
-   
+    
+    public void historialMensjes(ChatGrupalProto.Empty request,
+            StreamObserver<ChatGrupalProto.HistorialMensajesResponse> responseObserver) {
+
+        ChatGrupalProto.HistorialMensajesResponse response = ChatGrupalProto.HistorialMensajesResponse.newBuilder()
+                .addAllTexto(mensajes) // agrega todos los mensajes guardados
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+            }
 }

@@ -28,32 +28,32 @@ public class Client {
             @Override
             public void onNext(ChatGrupalProto.ConectarResponse response) {
                 idUsuario = response.getId();
-                System.out.println("✅ Conectado como " + nombreUsuario + " (ID: " + idUsuario + ")");
-                System.out.println("Mensajes previos: " + response.getMensajesGuardadosList());
+                System.out.println("Conectado como " + nombreUsuario + " (ID: " + idUsuario + ")");
+                System.out.println("Mensajes previos: \n" + response.getMensajesGuardadosList().toString());
                 
             }
 
             @Override
             public void onError(Throwable t) {
-                System.err.println("❌ Error: " + t.getMessage());
+                System.err.println(" Error: " + t.getMessage());
             }
 
             @Override
             public void onCompleted() {
-                System.out.println("🎯 Conexión finalizada");
+                System.out.println(" Conexión finalizada");
             }
         });
     }
 
-    public void chat() {
-        // Implementar la lógica de chat aquí
+    public void chat(String mensajeDeTeclado) {
+
         StreamObserver<ChatGrupalProto.EnviarMensajeRequest> requestObserver = stub.chat(new StreamObserver<ChatGrupalProto.RecibirMensajeResponse>() { 
-        // 📨 Este "new StreamObserver" lo implementa el cliente: es para RECIBIR mensajes del servidor
-        // 💬 El "requestObserver" que devuelve stub.chat(...) es para ENVIAR mensajes al servidor
+        // Este "new StreamObserver" lo implementa el cliente: es para RECIBIR mensajes del servidor
+        // El "requestObserver" que devuelve stub.chat(...) es para ENVIAR mensajes al servidor
 
             @Override
             public void onNext(ChatGrupalProto.RecibirMensajeResponse response) {
-                System.out.println("💬 " + response.getMensaje());
+               System.out.println("[" + response.getMensaje().getTimestamp() + "] " + response.getMensaje().getUsuario() + ": " + response.getMensaje().getTexto());
             }
 
             @Override
@@ -67,17 +67,15 @@ public class Client {
             }
         });
 
-        // Enviar mensajes de ejemplo
-        for (int i = 1; i <= 5; i++) {
-            ChatGrupalProto.EnviarMensajeRequest mensaje = ChatGrupalProto.EnviarMensajeRequest.newBuilder()
-                    .setMensaje(ChatGrupalProto.Mensaje.newBuilder()
-                            .setUsuario(nombreUsuario)
-                            .setTexto("Hola " + i)
-                            .build())
-                    .build();
-            requestObserver.onNext(mensaje);
-        }
-
+    
+        ChatGrupalProto.EnviarMensajeRequest mensaje = ChatGrupalProto.EnviarMensajeRequest.newBuilder()
+                .setMensaje(ChatGrupalProto.Mensaje.newBuilder()
+                        .setUsuario(nombreUsuario)
+                        .setTexto(mensajeDeTeclado)
+                        .setTimestamp(java.time.LocalDateTime.now().toString())
+                        .build())
+                .build();
+        requestObserver.onNext(mensaje);
         requestObserver.onCompleted();
     }
 
@@ -110,10 +108,44 @@ public class Client {
         });
     }
 
+    public void historialMensajes(){
+        ChatGrupalProto.Empty request = ChatGrupalProto.Empty.newBuilder().build();
+        stub.historialMensajes(request, new StreamObserver<ChatGrupalProto.HistorialMensajesResponse>() {
+            @Override
+            public void onNext(ChatGrupalProto.HistorialMensajesResponse response) {
+                System.out.println("Historial de mensajes: \n" + response.getTextoList().toString());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("❌ Error al obtener historial: " + t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("🎯 Historial recibido");
+            }
+        });
+    }
+
     public static void main(String[] args) throws InterruptedException {
         Client cliente = new Client("Usuario1");
         cliente.conectar();
+        boolean salir = false;
+        while(!salir){
+            try {
+                String mensajeDeTeclado = System.console().readLine();
+                if (mensajeDeTeclado.equals("/historial")){
+                    cliente.historialMensajes();
+                }else{
+                    cliente.chat(mensajeDeTeclado);
+                }
+            } catch (Exception eKeywordInterrupt) {
+                salir = true;
 
+                System.out.println("Saliendo del chat...");
+            }
+        }
         Thread.sleep(2000);
         System.out.println("🆔 ID guardado en cliente: " + cliente.getIdUsuario());
         cliente.cerrar();

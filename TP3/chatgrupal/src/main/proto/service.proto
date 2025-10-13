@@ -7,6 +7,7 @@ option java_outer_classname = "ChatGrupalProto";
 message Mensaje {
   string usuario = 1;
   string texto = 2;
+  string timestamp = 3;
 }
 
 message ConectarRequest {
@@ -24,7 +25,7 @@ message EnviarMensajeRequest {
 }
 
 message RecibirMensajeResponse {
-  string mensaje = 1;
+  Mensaje mensaje = 1;
 }
 
 message DesconectarRequest {
@@ -36,6 +37,9 @@ message DesconectarResponse {
   string mensaje = 1;
 }
 
+message HistorialMensajesResponse{
+  repeated string texto = 1;
+}
 
 
 message Empty {}
@@ -44,4 +48,5 @@ service ChatGrupal {
   rpc Chat(stream EnviarMensajeRequest) returns (stream RecibirMensajeResponse);
   rpc Conectar(ConectarRequest) returns (ConectarResponse);
   rpc Desconectar(DesconectarRequest) returns (DesconectarResponse);
+  rpc HistorialMensajes(Empty) returns (HistorialMensajesResponse);
 }
