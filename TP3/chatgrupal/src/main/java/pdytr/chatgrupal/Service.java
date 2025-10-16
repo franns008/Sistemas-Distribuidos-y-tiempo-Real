@@ -110,8 +110,8 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
         System.out.println("[SERVER] " + mensaje);
     }
-    
-    public void historialMensjes(ChatGrupalProto.Empty request,
+    @Override
+    public void historialMensajes(ChatGrupalProto.Empty request,
             StreamObserver<ChatGrupalProto.HistorialMensajesResponse> responseObserver) {
 
         ChatGrupalProto.HistorialMensajesResponse response = ChatGrupalProto.HistorialMensajesResponse.newBuilder()
@@ -120,5 +120,5 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
-            }
+    }
 }
