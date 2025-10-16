@@ -14,7 +14,11 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
     public static List<String> usuarios = new CopyOnWriteArrayList<>();
     public static ConcurrentHashMap<Integer, StreamObserver<ChatGrupalProto.RecibirMensajeResponse>> observers =
         new ConcurrentHashMap<>();
-    public static int idCounter = 0;
+    public static int idCounter;
+
+    public Service() {
+        idCounter = 0;
+    }
 
     @Override
     public StreamObserver<ChatGrupalProto.EnviarMensajeRequest> chat(
@@ -41,8 +45,9 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
                 if (idAsocado == -1) {
                     idAsocado = request.getId();
                     observers.put(idAsocado, responseObserver);
+                    System.out.println("[SERVER] Nuevo cliente registrado con ID " + idAsocado);
                 }
-                
+
                 System.out.println("[SERVER] Nuevo mensaje: " + mensaje);
 
                 for (StreamObserver<ChatGrupalProto.RecibirMensajeResponse> observer : observers.values()) {
@@ -78,11 +83,11 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
         usuarios.add(usuario);
 
         int id = idCounter;
-        idCounter++;
+        this.idCounter = this.idCounter + 1;
         String mensaje = "Usuario " + usuario + " conectado al chat grupal.";
 
         ChatGrupalProto.ConectarResponse response = ChatGrupalProto.ConectarResponse.newBuilder()
-                .addMensajesGuardados(mensajes.toString())
+                .addAllMensajesGuardados(mensajes)
                 .setId(id)
                 .build();
 
@@ -110,8 +115,8 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
         System.out.println("[SERVER] " + mensaje);
     }
-    
-    public void historialMensjes(ChatGrupalProto.Empty request,
+    @Override
+    public void historialMensajes(ChatGrupalProto.Empty request,
             StreamObserver<ChatGrupalProto.HistorialMensajesResponse> responseObserver) {
 
         ChatGrupalProto.HistorialMensajesResponse response = ChatGrupalProto.HistorialMensajesResponse.newBuilder()
@@ -120,5 +125,5 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
-            }
+    }
 }

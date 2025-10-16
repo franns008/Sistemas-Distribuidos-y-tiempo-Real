@@ -49,18 +49,22 @@ public class Client {
             public void onNext(ChatGrupalProto.ConectarResponse response) {
                 idUsuario = response.getId();
                 System.out.println("Conectado como " + nombreUsuario + " (ID: " + idUsuario + ")");
-                System.out.println("Mensajes previos: \n" + response.getMensajesGuardadosList().toString());
+                if (!response.getMensajesGuardadosList().isEmpty()) {
+                    for (String msg : response.getMensajesGuardadosList()) {
+                        System.out.println(msg);
+                    }
+                }
                 
             }
 
             @Override
             public void onError(Throwable t) {
-                System.err.println(" Error: " + t.getMessage());
+                System.err.println("Error: " + t.getMessage());
             }
 
             @Override
             public void onCompleted() {
-                System.out.println(" Conexión finalizada");
+                System.out.println("Conexión completada");
             }
         });
     }
@@ -73,6 +77,7 @@ public class Client {
                         .setTexto(mensajeDeTeclado)
                         .setTimestamp(java.time.LocalDateTime.now().toString())
                         .build())
+                .setId(idUsuario)
                 .build();
         requestObserver.onNext(mensaje);
         
