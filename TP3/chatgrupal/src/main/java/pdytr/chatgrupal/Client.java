@@ -75,7 +75,7 @@ public class Client {
                 .setMensaje(ChatGrupalProto.Mensaje.newBuilder()
                         .setUsuario(nombreUsuario)
                         .setTexto(mensajeDeTeclado)
-                        .setTimestamp(java.time.LocalDateTime.now().toString())
+                        .setTimestamp(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                         .build())
                 .setId(idUsuario)
                 .build();
@@ -133,7 +133,15 @@ public class Client {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Client cliente = new Client("Usuario1");
+        String usuario;
+        if (args.length != 1) {
+            usuario = "Usuario" + ((int)(Math.random()*1000));
+            System.out.println("No se proporcionó un nombre de usuario. Usando nombre por defecto: " + usuario);
+        } else {
+            usuario = args[0];
+        }
+
+        Client cliente = new Client(usuario);
         cliente.conectar();
         System.out.println("Conectandose al chat grupal...");
         boolean salir = false;
