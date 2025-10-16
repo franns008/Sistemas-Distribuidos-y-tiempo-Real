@@ -36,12 +36,13 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
                 String mensaje = mensajeProto.getUsuario() + " [" + mensajeProto.getTimestamp() + "]: "
                         + mensajeProto.getTexto();
+                mensajes.add(mensaje);
                 
-                // Aca agrego el observer del cliente que me envio el mensaje a la lista de observers y el id
                 if (idAsocado == -1) {
                     idAsocado = request.getId();
                     observers.put(idAsocado, responseObserver);
                 }
+                
                 System.out.println("[SERVER] Nuevo mensaje: " + mensaje);
 
                 for (StreamObserver<ChatGrupalProto.RecibirMensajeResponse> observer : observers.values()) {

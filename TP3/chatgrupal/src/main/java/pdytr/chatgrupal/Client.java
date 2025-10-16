@@ -10,6 +10,7 @@ public class Client {
     private String nombreUsuario;
     private ChatGrupalGrpc.ChatGrupalStub stub;
     private ManagedChannel channel;
+    private StreamObserver<ChatGrupalProto.EnviarMensajeRequest> requestObserver;
 
     public Client(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
@@ -17,6 +18,25 @@ public class Client {
                 .usePlaintext()
                 .build();
         this.stub = ChatGrupalGrpc.newStub(channel);
+        this.requestObserver = stub.chat(new StreamObserver<ChatGrupalProto.RecibirMensajeResponse>() {
+        // Este "new StreamObserver" lo implementa el cliente: es para RECIBIR mensajes del servidor
+        // El "requestObserver" que devuelve stub.chat(...) es para ENVIAR mensajes al servidor
+
+            @Override
+            public void onNext(ChatGrupalProto.RecibirMensajeResponse response) {
+               System.out.println("[" + response.getMensaje().getTimestamp() + "] " + response.getMensaje().getUsuario() + ": " + response.getMensaje().getTexto());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("❌ Error: " + t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("🎯 Chat finalizado");
+            }
+        });
     }
 
     public void conectar() {
@@ -47,27 +67,6 @@ public class Client {
 
     public void chat(String mensajeDeTeclado) {
 
-        StreamObserver<ChatGrupalProto.EnviarMensajeRequest> requestObserver = stub.chat(new StreamObserver<ChatGrupalProto.RecibirMensajeResponse>() { 
-        // Este "new StreamObserver" lo implementa el cliente: es para RECIBIR mensajes del servidor
-        // El "requestObserver" que devuelve stub.chat(...) es para ENVIAR mensajes al servidor
-
-            @Override
-            public void onNext(ChatGrupalProto.RecibirMensajeResponse response) {
-               System.out.println("[" + response.getMensaje().getTimestamp() + "] " + response.getMensaje().getUsuario() + ": " + response.getMensaje().getTexto());
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                System.err.println("❌ Error: " + t.getMessage());
-            }
-
-            @Override
-            public void onCompleted() {
-                System.out.println("🎯 Chat finalizado");
-            }
-        });
-
-    
         ChatGrupalProto.EnviarMensajeRequest mensaje = ChatGrupalProto.EnviarMensajeRequest.newBuilder()
                 .setMensaje(ChatGrupalProto.Mensaje.newBuilder()
                         .setUsuario(nombreUsuario)
@@ -76,7 +75,7 @@ public class Client {
                         .build())
                 .build();
         requestObserver.onNext(mensaje);
-        requestObserver.onCompleted();
+        
     }
 
     public int getIdUsuario() {
@@ -131,23 +130,24 @@ public class Client {
     public static void main(String[] args) throws InterruptedException {
         Client cliente = new Client("Usuario1");
         cliente.conectar();
+        System.out.println("Conectandose al chat grupal...");
         boolean salir = false;
         while(!salir){
-            try {
-                String mensajeDeTeclado = System.console().readLine();
-                if (mensajeDeTeclado.equals("/historial")){
-                    cliente.historialMensajes();
-                }else{
-                    cliente.chat(mensajeDeTeclado);
-                }
-            } catch (Exception eKeywordInterrupt) {
+            String mensajeDeTeclado = System.console().readLine();
+            if (mensajeDeTeclado.equals("/historial")){
+                cliente.historialMensajes();
+            }
+            else if (mensajeDeTeclado.equals("/salir")){
                 salir = true;
-
                 System.out.println("Saliendo del chat...");
+
+            }
+            else{
+                cliente.chat(mensajeDeTeclado);
             }
         }
+        cliente.requestObserver.onCompleted();
         Thread.sleep(2000);
-        System.out.println("🆔 ID guardado en cliente: " + cliente.getIdUsuario());
         cliente.cerrar();
     }
 }
