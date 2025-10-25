@@ -31,10 +31,17 @@ function Agente_Win {
     & $JAVA -cp "lib/jade.jar;$OUT_DIR" jade.Boot -container -container-name contenedorEjercicio1 -host localhost -agents "AgenteA:$MAIN_CLASS"
 }
 
+# Function to run an agent on a remote Windows machine 
+function Agente_win_remoto{
+    Write-Output "Arrancando  agente JADE en Windows..."
+    & $JAVA -cp "lib/jade.jar;$OUT_DIR" jade.Boot -container -container-name contenedorEjercicio1 -host 192.168.0.6 -local-host 192.168.0.11 -agents "AgenteA:$MAIN_CLASS"
+}
+
 # Main logic to call functions based on input parameter
 switch ($target) {
     "compile" { Compile }
     "gui" { Gui }
     "agente" { Agente_Win }
+    "remoto" { Agente_win_remoto }
     default { Write-Output "Usage: .\jade.ps1 <target> (compile, gui, agente)" }
 }
