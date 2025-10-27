@@ -17,7 +17,7 @@ public class AgenteA extends Agent {
             doDelete();
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("[AgentA] Error al intentar crear el agente B.");
+            System.out.println("[AgentA] Surgió un error al intentar crear el agente B: " + e.getMessage());
         }
     }
 
