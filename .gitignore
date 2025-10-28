@@ -40,9 +40,6 @@ $RECYCLE.BIN/
 # ------------------------
 # EDITORES
 # ------------------------
-# Visual Studio Code
-.vscode/
-*.code-workspace
 
 # JetBrains / IntelliJ
 .idea/

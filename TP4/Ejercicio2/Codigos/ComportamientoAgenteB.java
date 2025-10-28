@@ -3,6 +3,8 @@ import jade.core.Location;
 import jade.core.ContainerID;
 import jade.core.behaviours.OneShotBehaviour;
 
+
+
 public class ComportamientoAgenteB extends OneShotBehaviour    {
 
     private String idOrigen;

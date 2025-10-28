@@ -1,0 +1,9 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/jade.jar"
+  ],
+  "java.project.sourcePaths": [
+    "Codigos"
+  ],
+  "java.project.outputPath": "classes"
+}
