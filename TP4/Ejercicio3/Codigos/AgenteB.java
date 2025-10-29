@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 import jade.core.Agent;
 import jade.core.Location;
 import jade.core.ContainerID;
@@ -10,7 +12,7 @@ public class AgenteB extends Agent {
 
     // Executed once during agent creation
     protected void setup(){
-        System.out.println("\n\nHola, soy el agente B, con nombre local " + getLocalName());
+        System.out.println("[AgenteB] Hola, soy el agente B, con nombre local " + getLocalName());
         System.out.println("[AgentB] Y nombre completo... " + getName());
         System.out.println("[AgentB] Y estoy en la ubicación " + here().getID() + "\n\n");
         String idOrigen = here().getID();

@@ -11,34 +11,35 @@ import jade.wrapper.StaleProxyException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 public class AgenteA extends Agent {
     private List<String> contenedoresId;
 
-    private void obtenerContenedores(){
-        this.contenedoresId = new ArrayList<>();
+    private void obtenerContenedores() {
+        Set<String> contenedores = new HashSet<>();
         try {
-            // Buscar todos los agentes en la plataforma
-            AMSAgentDescription[] agents = AMSService.search(
-                    this,
-                    new AMSAgentDescription(),
-                    new SearchConstraints()
+            AMSAgentDescription[] agentes = AMSService.search(
+                this,
+                new AMSAgentDescription(),
+                new SearchConstraints()
             );
 
-
-
-            for (AMSAgentDescription desc : agents) {
-                AID agentID = desc.getName();
-                String addresses[] = agentID.getAddressesArray();
-                if (addresses != null && addresses.length > 0) {
-                    // La dirección contiene info del contenedor
-                    contenedoresId.add(addresses[0]);
+            for (AMSAgentDescription desc : agentes) {
+                AID id = desc.getName();
+                String[] direcciones = id.getAddressesArray();
+                if (direcciones != null && direcciones.length > 0) {
+                    String direccion = direcciones[0];
+                    // Extraer parte del contenedor (por ejemplo después del último "/")
+                    contenedores.add(direccion);
                 }
             }
+            this.contenedoresId = new ArrayList<>(contenedores);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 
 
@@ -53,11 +54,11 @@ public class AgenteA extends Agent {
         AgentController controllerB = null;
         for(String id : this.contenedoresId){
             try {
-
-                controllerB = getContainerController().createNewAgent("AgenteB", AgenteB.class.getName(), new Object[]{id, idOrigen});
+                System.out.println("[AgenteA] Creando el agente B en el contenedor: " + id);
+                controllerB = getContainerController().createNewAgent("AgenteB", AgenteB.class.getName(), new Object[]{id});
                 controllerB.start();
             } catch (StaleProxyException e) {
-                System.out.println("Error en la del agenteB");;
+                System.out.println("[AgenteA] Error en la creación del agenteB");
             }
             ACLMessage msg = blockingReceive();
             System.out.println("[AgenteA] Recibí este mensaje del Agente B \n"+msg);
