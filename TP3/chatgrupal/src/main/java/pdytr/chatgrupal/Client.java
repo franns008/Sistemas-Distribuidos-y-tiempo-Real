@@ -134,13 +134,8 @@ public class Client {
 
     public static void main(String[] args) throws InterruptedException {
         String usuario;
-        if (args.length != 1) {
-            usuario = "Usuario" + ((int)(Math.random()*1000));
-            System.out.println("No se proporcionó un nombre de usuario. Usando nombre por defecto: " + usuario);
-        } else {
-            usuario = args[0];
-        }
-
+        System.err.println("Ingrese su nombre de usuario:");
+        usuario = System.console().readLine();
         Client cliente = new Client(usuario);
         cliente.conectar();
         System.out.println("Conectandose al chat grupal...");
