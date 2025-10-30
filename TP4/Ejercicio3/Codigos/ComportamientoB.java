@@ -7,15 +7,16 @@ import jade.lang.acl.ACLMessage;
 
 import java.lang.management.ManagementFactory;
 import com.sun.management.OperatingSystemMXBean;
+import java.util.*;
 
 public class ComportamientoB extends OneShotBehaviour    {
 
     private String idOrigen;
-    private String idDestino;
+    private List<String> idsDestino;
 
-    public ComportamientoB(Agent a, String idDestino, String idOrigen) {
+    public ComportamientoB(Agent a, List<String> idsDestino, String idOrigen) {
         super(a);
-        this.idDestino = idDestino;
+        this.idsDestino = idsDestino;
         this.idOrigen = idOrigen;
     }
 
@@ -23,24 +24,12 @@ public class ComportamientoB extends OneShotBehaviour    {
     public void action() {
         List<String> idDestino = (List<String>) myAgent.getArguments()[0];
 
-            for (String id : idDestino) {
-                myAgent.doMove(new ContainerID(id, null));
-                System.out.println("[AgenteB] Voy a obtener informacion del sistema en el contenedor: " + myAgent.here().getID());
-
-            OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-            double systemLoad = osBean.getSystemLoadAverage();
-            double totalMemory = osBean.getTotalPhysicalMemorySize();
-            double freeMemory = osBean.getFreePhysicalMemorySize();
-
-            myAgent.doMove(new ContainerID(this.idOrigen, null));
-            System.out.println("[AgenteB] Regresé al contenedor de origen: " + myAgent.here().getID());
-            System.out.println("[AgenteB] Carga del sistema: " + systemLoad
-                + ", Memoria total: " + totalMemory
-                + ", Memoria libre: " + freeMemory);
-           
+        for (String id : idDestino) {
+            myAgent.doMove(new ContainerID(id, null));
+            
         }
-         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.addReceiver(new AID("AgenteA"));
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        msg.addReceiver(new AID("AgenteA", AID.ISLOCALNAME));
         msg.setContent("[AgenteB] Ya termine mi tarea");
         myAgent.send(msg);
     }

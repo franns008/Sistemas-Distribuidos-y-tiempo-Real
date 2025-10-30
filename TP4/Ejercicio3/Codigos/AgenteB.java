@@ -3,8 +3,9 @@ import java.util.Stack;
 import jade.core.Agent;
 import jade.core.Location;
 import jade.core.ContainerID;
-
-
+import java.lang.management.ManagementFactory;
+import com.sun.management.OperatingSystemMXBean;
+import java.util.*;
 
 
 
@@ -23,7 +24,16 @@ public class AgenteB extends Agent {
 
     protected void afterMove() {
         Location origen = here();
-        System.out.println("[AgenteB] Y estoy en la ubicación " + origen.getID() + "\n\n");
-        System.out.println("[AgenteB] La migración ha sido exitosa.");
+        System.out.println("[AgenteB] Voy a obtener informacion del sistema en el contenedor: " +here().getID());
+        OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+        double systemLoad = osBean.getSystemLoadAverage();
+        double totalMemory = osBean.getTotalPhysicalMemorySize();
+        double freeMemory = osBean.getFreePhysicalMemorySize();
+
+        System.out.println("[AgenteB] Información del sistema en el contenedor " + here().getID() + ":");
+        System.out.println("[AgenteB] Carga del sistema: " + systemLoad);
+        System.out.println("[AgenteB] Memoria total: " + totalMemory);
+        System.out.println("[AgenteB] Memoria libre: " + freeMemory);
+        System.out.println("[AgenteB] migracion exitosa \n\n"  );
     }
 }

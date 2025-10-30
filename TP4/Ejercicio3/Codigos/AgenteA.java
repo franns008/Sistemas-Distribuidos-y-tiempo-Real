@@ -9,8 +9,6 @@ import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.*;
 
 public class AgenteA extends Agent {
@@ -51,7 +49,7 @@ public class AgenteA extends Agent {
         String idOrigen = here().getID();
         String idDestino = "Main-Container";
         
-        this.contenedoresId = new ArrayList<>("Main-container","Container-");
+        this.contenedoresId = List.of("Main-Container","contenedorEjercicio1");
         long inicioComunicacion = System.currentTimeMillis();
         AgentController controllerB = null;
         try {
