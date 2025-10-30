@@ -21,24 +21,28 @@ public class ComportamientoB extends OneShotBehaviour    {
 
     @Override
     public void action() {
-        String idDestino = myAgent.getArguments()[0].toString();
-        
-        myAgent.doMove(new ContainerID(idDestino, null));
-        System.out.println("[AgenteB] Voy a obtener informacion del sistema en el contenedor: " + myAgent.here().getID());
+        List<String> idDestino = (List<String>) myAgent.getArguments()[0];
 
-        OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-        double systemLoad = osBean.getSystemLoadAverage();
-        double totalMemory = osBean.getTotalPhysicalMemorySize();
-        double freeMemory = osBean.getFreePhysicalMemorySize();
+            for (String id : idDestino) {
+                myAgent.doMove(new ContainerID(id, null));
+                System.out.println("[AgenteB] Voy a obtener informacion del sistema en el contenedor: " + myAgent.here().getID());
 
-        myAgent.doMove(new ContainerID(this.idOrigen, null));
-        System.out.println("[AgenteB] Regresé al contenedor de origen: " + myAgent.here().getID());
-        System.out.println("[AgenteB] Carga del sistema: " + systemLoad
-            + ", Memoria total: " + totalMemory
-            + ", Memoria libre: " + freeMemory);
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+            OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+            double systemLoad = osBean.getSystemLoadAverage();
+            double totalMemory = osBean.getTotalPhysicalMemorySize();
+            double freeMemory = osBean.getFreePhysicalMemorySize();
+
+            myAgent.doMove(new ContainerID(this.idOrigen, null));
+            System.out.println("[AgenteB] Regresé al contenedor de origen: " + myAgent.here().getID());
+            System.out.println("[AgenteB] Carga del sistema: " + systemLoad
+                + ", Memoria total: " + totalMemory
+                + ", Memoria libre: " + freeMemory);
+           
+        }
+         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
         msg.addReceiver(new AID("AgenteA"));
         msg.setContent("[AgenteB] Ya termine mi tarea");
+        myAgent.send(msg);
     }
 
 }

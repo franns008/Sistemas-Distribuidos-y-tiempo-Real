@@ -16,9 +16,9 @@ public class AgenteB extends Agent {
         System.out.println("[AgentB] Y nombre completo... " + getName());
         System.out.println("[AgentB] Y estoy en la ubicación " + here().getID() + "\n\n");
         String idOrigen = here().getID();
-        String idDestino = getArguments()[0].toString();
-        addBehaviour(new ComportamientoB(this, idDestino, idOrigen));
-        
+        List<String> idsDestino = (List<String>) getArguments()[0];
+        addBehaviour(new ComportamientoB(this, idsDestino, idOrigen));
+
     }
 
     protected void afterMove() {

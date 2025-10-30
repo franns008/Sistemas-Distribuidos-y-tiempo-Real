@@ -16,7 +16,7 @@ import java.util.*;
 public class AgenteA extends Agent {
     private List<String> contenedoresId;
 
-    private void obtenerContenedores() {
+  /*  private void obtenerContenedores() {
         Set<String> contenedores = new HashSet<>();
         try {
             AMSAgentDescription[] agentes = AMSService.search(
@@ -39,30 +39,30 @@ public class AgenteA extends Agent {
             e.printStackTrace();
         }
     }
+    */
 
 
 
 
         // Executed once during agent creation
     protected void setup(){
-        System.out.println("[AgenteA] Hola, soy el agente A, con nombre local " + getLocalName());
+        System.out.println("[AgenteA] Hola, soy el agente A, con nombre local " + getLocalName().toString());
         System.out.println("[AgenteA] y voy a migrar al agente B al contenedor indicado..."); 
         String idOrigen = here().getID();
         String idDestino = "Main-Container";
-        this.obtenerContenedores();
+        
+        this.contenedoresId = new ArrayList<>("Main-container","Container-");
         long inicioComunicacion = System.currentTimeMillis();
         AgentController controllerB = null;
-        for(String id : this.contenedoresId){
-            try {
-                System.out.println("[AgenteA] Creando el agente B en el contenedor: " + id);
-                controllerB = getContainerController().createNewAgent("AgenteB", AgenteB.class.getName(), new Object[]{id});
-                controllerB.start();
-            } catch (StaleProxyException e) {
-                System.out.println("[AgenteA] Error en la creación del agenteB");
-            }
-            ACLMessage msg = blockingReceive();
-            System.out.println("[AgenteA] Recibí este mensaje del Agente B \n"+msg);
+        try {
+            System.out.println("[AgenteA] Creando el agente B en el contenedor: "+here().getID());
+            controllerB = getContainerController().createNewAgent("AgenteB", AgenteB.class.getName(), new Object[]{this.contenedoresId});
+            controllerB.start();
+        } catch (StaleProxyException e) {
+            System.out.println("[AgenteA] Error en la creación del agenteB");
         }
+        ACLMessage msg = blockingReceive();
+        System.out.println("[AgenteA] Recibí este mensaje del Agente B \n"+msg);
         long finComunicacion = System.currentTimeMillis();
         long tiempoTotal = finComunicacion-inicioComunicacion;
         System.out.println("[AgenteA] Tiempo total "+tiempoTotal);
