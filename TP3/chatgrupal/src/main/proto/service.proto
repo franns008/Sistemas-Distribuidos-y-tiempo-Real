@@ -8,6 +8,7 @@ message Mensaje {
   string usuario = 1;
   string texto = 2;
   string timestamp = 3;
+  int64 inicio = 4;
 }
 
 message ConectarRequest {

@@ -1,6 +1,5 @@
 package pdytr.chatgrupal;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -32,14 +31,9 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
             private int idAsocado = -1;
             @Override
             public void onNext(ChatGrupalProto.EnviarMensajeRequest request) {
-                ChatGrupalProto.Mensaje mensajeProto = ChatGrupalProto.Mensaje.newBuilder()
-                        .setUsuario(request.getMensaje().getUsuario())
-                        .setTexto(request.getMensaje().getTexto())
-                        .setTimestamp(LocalDateTime.now().toString())
-                        .build();
-
-                String mensaje = mensajeProto.getUsuario() + " [" + mensajeProto.getTimestamp() + "]: "
-                        + mensajeProto.getTexto();
+            
+                String mensaje = request.getMensaje().getUsuario() + " [" + request.getMensaje().getTimestamp() + "]: "
+                        + request.getMensaje().getTexto();
                 mensajes.add(mensaje);
                 
                 if (idAsocado == -1) {
@@ -52,7 +46,7 @@ public class Service extends ChatGrupalGrpc.ChatGrupalImplBase {
 
                 for (StreamObserver<ChatGrupalProto.RecibirMensajeResponse> observer : observers.values()) {
                     ChatGrupalProto.RecibirMensajeResponse response = ChatGrupalProto.RecibirMensajeResponse.newBuilder()
-                            .setMensaje(mensajeProto)
+                            .setMensaje(request.getMensaje())
                             .build();
                     observer.onNext(response);
                 }

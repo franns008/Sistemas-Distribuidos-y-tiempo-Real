@@ -25,6 +25,8 @@ public class Client {
             @Override
             public void onNext(ChatGrupalProto.RecibirMensajeResponse response) {
                System.out.println("[" + response.getMensaje().getTimestamp() + "] " + response.getMensaje().getUsuario() + ": " + response.getMensaje().getTexto());
+                long tiempoRespuesta = System.currentTimeMillis() - response.getMensaje().getInicio();
+                System.out.println("⏱️ Tiempo de respuesta: " + tiempoRespuesta + " ms");
             }
 
             @Override
@@ -75,7 +77,8 @@ public class Client {
                 .setMensaje(ChatGrupalProto.Mensaje.newBuilder()
                         .setUsuario(nombreUsuario)
                         .setTexto(mensajeDeTeclado)
-                        .setTimestamp(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                        .setTimestamp(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                        .setInicio(System.currentTimeMillis())
                         .build())
                 .setId(idUsuario)
                 .build();
