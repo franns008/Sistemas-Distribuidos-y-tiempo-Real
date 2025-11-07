@@ -6,5 +6,8 @@
     "Codigos"
   ],
   "java.project.outputPath": "classes",
-  "java.compile.nullAnalysis.mode": "disabled"
+  "java.compile.nullAnalysis.mode": "disabled",
+  "files.associations": {
+    "Servidor.C": "cpp"
+  }
 }
