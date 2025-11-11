@@ -1,0 +1,58 @@
+//Diseñá un .proto para un sistema de facturación que:
+//
+//Permita registrar un nuevo pago.
+//
+//Consultar el historial de facturas por cliente (server streaming).
+//
+//Obtener el total de ingresos del día (unary).
+//
+//💡 Incluí tipos numéricos (float o int32) y fechas como string.
+
+
+
+
+
+syntax = "proto3";
+
+//Permita registrar un nuevo pago.
+message PagoRequest{
+  int32  idCliente = 1;
+  float precio = 2;
+  string  fecha = 3;
+}
+
+message PagoResponse{
+  bool status = 1;
+}
+
+//Consultar el historial de facturas por cliente (server streaming).
+message FacturaResponse{
+  string fecha = 1;
+  string cosasLegales = 2;
+  float monto = 3;
+  string meotodoDePago = 4;
+}
+
+message FacturaRequest{
+
+  int32 idCliente = 1;
+
+}
+
+//Obtener el total de ingresos del día (unary).
+message TotalIngresosRequest {
+  int32 idCliente = 1;
+}
+
+message TotalIngresosResponse {
+  int64 totalIngresos = 1;
+  string fecha = 2;
+}
+
+
+
+service SistemaFacturacion{
+  rpc RegistrarPago(PagoRequest) returns (PagoResponse);
+  rpc HistorialDeFacturas(FacturaRequest) returns (stream FacturaResponse);
+  rpc TotalIngresos(TotalIngresosRequest) returns (TotalIngresosResponse);
+}

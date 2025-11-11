@@ -1,0 +1,35 @@
+/*
+//Ejercicio 2
+//
+//Diseñe un archivo .proto (versión 3) que defina un servicio ChatService con los
+//siguientes métodos:
+//SendMessage: recibe el nombre del usuario y el contenido del mensaje, devolviendo una confirmación.
+//ChatStream: permite el intercambio continuo de mensajes entre el cliente y el servidor.
+//
+//Incluya la línea syntax = "proto3";, defina los mensajes necesarios (requests y responses) e indique el tipo de RPC correspondiente a cada mét odo.
+//No escriba código del cliente ni del servidor.
+//
+
+
+ */
+
+syntax = "proto3";
+
+message SendMessageRequest{
+  string nombre_usuario =1;
+  string contenido = 2;
+}
+
+message ACK{
+  bool status = 1;
+}
+
+message ChatStreamResponse{
+  string nombre_usuario = 1;
+  string contenido = 2;
+}
+
+service ChatService{
+  rpc SendMessage(SendMessageRequest) returns (ACK); //unary
+  rpc ChatStream(stream SendMessageRequest) returns (stream ChatStreamResponse); //bidirectional
+}

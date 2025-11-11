@@ -11,7 +11,7 @@ $JAVA = "java"
 $CLASSPATH = "lib/jade.jar"
 $SRC_DIR = "Codigos"
 $OUT_DIR = "classes"
-$MAIN_CLASS = "AgenteA"
+$MAIN_CLASS = "Ejercicio2.Codigos.AgenteA"
 
 # Function to compile Java code
 function Compile {
@@ -36,15 +36,17 @@ function Agente_win_remoto{
     Write-Output "Arrancando  agente JADE en Windows..."
     & $JAVA -cp "lib/jade.jar;$OUT_DIR" jade.Boot -container -container-name contenedorEjercicio1 -host 192.168.0.6 -local-host 192.168.0.11 -agents "AgenteA:$MAIN_CLASS"
 }
-
-#function to create Containers on local machine
-function Crear_Contenedor_Local {
-    Write-Output "Creando contenedor local JADE en segundo plano..."
-    Start-Process -FilePath $JAVA `
-        -ArgumentList "-cp", "lib/jade.jar;$OUT_DIR", "jade.Boot", "-container", "-host", "localhost" `
-        -WindowStyle Hidden `
-        -RedirectStandardOutput "$OUT_DIR\jade_container.log" `
-        -RedirectStandardError "$OUT_DIR\jade_container_err.log"
+#Funcion para crear contenedores locales en background
+function crear_contenedores_locales {
+    Write-Output "Creando contenedores locales en background (sin interrumpir la consola)..."
+    $cp = "$CLASSPATH;$OUT_DIR"
+    $args = @(
+        '-cp', $cp,
+        'jade.Boot',
+        '-container',
+        '-host', 'localhost'
+    )
+    Start-Process -FilePath $JAVA -ArgumentList $args -WindowStyle Hidden
 }
 # Main logic to call functions based on input parameter
 switch ($target) {
@@ -52,6 +54,6 @@ switch ($target) {
     "gui" { Gui }
     "agente" { Agente_Win }
     "remoto" { Agente_win_remoto }
-    "crear" { Crear_Contenedor_Local }
+    "crear" {crear_contenedores_locales}
     default { Write-Output "Usage: .\jade.ps1 <target> (compile, gui, agente)" }
 }

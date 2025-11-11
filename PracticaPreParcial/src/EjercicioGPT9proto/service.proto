@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message CityRequest{
+  string ciudad=1;
+}
+message WeatherResponse{
+  string  condition =1;
+  float temperature = 2;
+}
+message WeatherReport{
+  int32 station_id =1;
+  float temperature = 2;
+  float humidity = 3;
+}
+
+message SummaryResponse{
+  float avg_tmp =1;
+  float avg_humidity = 2;
+}
+service WeatherService{
+  rpc GetCurrent(CityRequest) returns (WeatherResponse); //unario
+  rpc StreamForecast(CityRequest) returns (stream WeatherResponse); //Server-streaming
+  rpc ReportWeather(stream WeatherReport) returns (SummaryResponse);//Client-streaming
+}
+

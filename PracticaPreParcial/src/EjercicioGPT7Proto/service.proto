@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+message TwoNumbers{
+  int32 numberA = 1;
+  int32 numberB = 2;
+}
+
+message ResponseProduct{
+  int32 producto = 1;
+}
+
+message PrimeRequest{
+  int32 start = 1;
+  int32 end = 2;
+}
+
+message PrimeResponse{
+  int32 prime = 1 ;
+}
+
+message RequestProm{
+  int32 number = 1;
+}
+
+message ResponseProm{
+  int32 prom = 1;
+  int32 desviacion = 2;
+}
+
+service MathService{
+  rpc Multiply(TwoNumbers) returns (ResponseProduct); //unary
+  rpc PrimeStream(PrimeRequest) returns (stream PrimeResponse); //server Stream
+  rpc CalculateStats(stream RequestProm) returns (ResponseProm); //client Stream
+}
+

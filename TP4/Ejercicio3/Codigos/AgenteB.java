@@ -5,20 +5,22 @@ import jade.core.Location;
 import jade.core.ContainerID;
 import java.lang.management.ManagementFactory;
 import com.sun.management.OperatingSystemMXBean;
+import jade.core.behaviours.*;
+
 import java.util.*;
 
 
-
 public class AgenteB extends Agent {
-
+    Behaviour b;
     // Executed once during agent creation
     protected void setup(){
         System.out.println("[AgenteB] Hola, soy el agente B, con nombre local " + getLocalName());
         System.out.println("[AgentB] Y nombre completo... " + getName());
         System.out.println("[AgentB] Y estoy en la ubicación " + here().getID() + "\n\n");
-        String idOrigen = here().getID();
+        String idOrigen = here().getName();
         List<String> idsDestino = (List<String>) getArguments()[0];
-        addBehaviour(new ComportamientoB(this, idsDestino, idOrigen));
+        b = new ComportamientoB(this, idsDestino, idOrigen);
+        addBehaviour(b);
 
     }
 
@@ -35,5 +37,6 @@ public class AgenteB extends Agent {
         System.out.println("[AgenteB] Memoria total: " + totalMemory);
         System.out.println("[AgenteB] Memoria libre: " + freeMemory);
         System.out.println("[AgenteB] migracion exitosa \n\n"  );
+        b.restart();
     }
 }

@@ -1,0 +1,37 @@
+//Ejercicio 3
+//
+//Diseñe un archivo .proto (versión 3) que defina un servicio StockService con los
+//siguientes métodos:
+//GetStockPrice: recibe el nombre o símbolo de una acción y devuelve su precio actual.
+//StreamStockPrices: envía una secuencia de precios actualizados para una o varias acciones solicitadas.
+//
+//Incluya la línea syntax = "proto3";, defina los mensajes necesarios (requests y responses) e indique el tipo de RPC correspondiente a cada mét odo.
+//No escriba código del cliente ni del servidor.
+
+syntax = "proto3";
+
+message PriceRequest{
+
+  string name = 1;
+
+}
+
+message PriceResponse{
+
+  float price = 1;
+
+}
+
+message PricesRequest{
+
+  repeated string names = 1;
+
+}
+
+
+service StockService{
+
+  rpc ObtenerPrecio (PriceRequest) returns (PriceResponse);
+  rpc ObtenerPrecios (PricesRequest) returns (stream PriceResponse);
+
+}

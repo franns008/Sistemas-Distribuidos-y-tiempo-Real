@@ -58,6 +58,7 @@ public class AgenteA extends Agent {
             controllerB.start();
         } catch (StaleProxyException e) {
             System.out.println("[AgenteA] Error en la creación del agenteB");
+            e.printStackTrace();
         }
         ACLMessage msg = blockingReceive();
         System.out.println("[AgenteA] Recibí este mensaje del Agente B \n"+msg);

@@ -1,13 +1,7 @@
 {
   "java.project.referencedLibraries": [
-    "lib/jade.jar"
+    "lib/**/*.jar"
   ],
-  "java.project.sourcePaths": [
-    "Codigos"
-  ],
-  "java.project.outputPath": "classes",
-  "java.compile.nullAnalysis.mode": "disabled",
-  "files.associations": {
-    "Servidor.C": "cpp"
-  }
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx8G -Xms100m -Xlog:disable",
+  "java.dependency.packagePresentation": "hierarchical"
 }

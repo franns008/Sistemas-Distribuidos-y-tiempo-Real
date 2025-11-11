@@ -1,0 +1,39 @@
+//Ejercicio 1
+//
+//Diseñe un archivo .proto (versión 3) que defina un servicio TemperatureService con los
+//siguientes métodos:
+//ConvertToFahrenheit: recibe una temperatura en grados Celsius y devuelve su equivalente en Fahrenheit.
+//AverageTemperature: recibe una secuencia de temperaturas y devuelve el promedio final.
+//
+//Incluya la línea syntax = "proto3";, defina los mensajes necesarios (requests y responses) e indique el tipo de RPC correspondiente a cada método.
+//No escriba código del cliente ni del servidor.
+
+syntax = "proto3";
+
+message ConvertToFahrenheitRequest {
+  float degreesInCelsius = 1;
+}
+
+message ConvertToFahrenheitResponse {
+  bool success = 1;
+  float degreesInFahrenheit = 2;
+}
+
+// Depende si la secuencia se genera estática o dinámicamente (repeated o stream).
+
+// Suponiendo que la secuencia se conoce, para AverageTemperature usamos repeated y unary rpc.
+message AverageTemperatureRequest {
+  repeated float degrees = 1;
+}
+
+message AverageTemperatureResponse {
+  bool success = 1;
+  float degreesAverage = 2;
+}
+
+// Si la secuencia no se conoce o se genera dinámicamente, AverageTemperature se trataría de un clientStreaming sin repeated.
+
+service TemperatureService {
+  rpc ConvertToFahrenheit(ConvertToFahrenheitRequest) returns (ConvertToFahrenheitResponse);
+  rpc AverageTemperature(AverageTemperatureRequest) returns (AverageTemperatureResponse);
+}

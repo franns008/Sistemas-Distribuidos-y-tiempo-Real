@@ -43,7 +43,9 @@ message HistorialMensajesResponse{
 }
 
 
-message Empty {}
+message Empty {
+  
+}
 
 service ChatGrupal {
   rpc Chat(stream EnviarMensajeRequest) returns (stream RecibirMensajeResponse);
